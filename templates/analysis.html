@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Walmart Analysis Report</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f9;
+      margin: 0;
+      padding: 0;
+    }
+    .report-container {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .report-container h1 {
+      margin-bottom: 20px;
+      color: #222;
+    }
+    .report-page {
+      margin: 20px 0;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      width: 100%;
+    }
+    .back-btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 12px 20px;
+      background: #007bff;
+      color: white;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+    .back-btn:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="report-container">
+    <h1>📊 Walmart Analysis Report</h1>
+    
+    <!-- Report pages as images -->
+    <img src="{{ url_for('static', filename='walmartanalysis.jpg') }}" alt="Report Page 1" class="report-page">
+    
+<a href="{{ url_for('dashboard') }}" class="back-btn">⬅ Back to Dashboard</a>
+  </div>
+</body>
+</html>

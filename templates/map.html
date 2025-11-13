@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Walmart Canada Sales Dashboard</title>
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f4f6f9;
+      color: #333;
+    }
+    header {
+      background: #007ae4;
+      color: white;
+      padding: 15px;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+    }
+    header p {
+      margin: 5px 0 0;
+      font-size: 14px;
+    }
+    .kpi-container {
+      display: flex;
+      justify-content: space-around;
+      background: white;
+      padding: 20px;
+      border-bottom: 1px solid #ddd;
+    }
+    .kpi {
+      text-align: center;
+    }
+    .kpi h2 {
+      color: #0046ad;
+      margin: 0;
+    }
+    .kpi p {
+      margin: 5px 0 0;
+      color: #666;
+    }
+    #map {
+      height: 600px;
+      margin: 20px;
+      border-radius: 10px;
+    }
+    .legend {
+      background: white;
+      padding: 10px;
+      line-height: 1.4;
+      border-radius: 6px;
+    }
+    .legend i {
+      width: 18px;
+      height: 18px;
+      float: left;
+      margin-right: 8px;
+      opacity: 0.7;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <h1>Walmart Central America Sales Dashboard</h1>
+    <p>Real-time sales performance across Canadian locations</p>
+  </header>
+
+  <!-- KPIs -->
+  <div class="kpi-container">
+    <div class="kpi">
+      <h2>6</h2>
+      <p>Total Stores</p>
+    </div>
+    <div class="kpi">
+      <h2>$7,920,000</h2>
+      <p>Total Sales</p>
+    </div>
+    <div class="kpi">
+      <h2>$792,000</h2>
+      <p>Avg. Sales</p>
+    </div>
+    <div class="kpi">
+      <h2>MEXICO</h2>
+      <p>Top Performing</p>
+    </div>
+  </div>
+
+  <!-- Map -->
+  <div id="map"></div>
+
+  <script>
+    // Initialize map (zoomed to Canada)
+    var map = L.map('map').setView([56.1304, -106.3468], 4);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 18,
+    }).addTo(map);
+
+    // Store data
+    var stores = [
+       { city: "Guatemala", coords: [15.7835, -90.2308], sales: 300000 },
+       { city: "El Salvador", coords: [13.7942, -88.8965], sales: 250000 },
+       { city: "Mexico City", coords: [19.4326, -99.1332], sales: 950000 },
+       { city: "Honduras", coords: [15.2000, -86.2419], sales: 270000 },
+       { city: "Nicaragua", coords: [12.8654, -85.2072], sales: 220000 },
+       { city: "Costa Rica", coords: [9.7489, -83.7534], sales: 280000 }
+];
+
+    // Function to decide circle size
+    function getRadius(sales) {
+      if (sales > 1000000) return 20;
+      if (sales > 500000) return 15;
+      return 10;
+    }
+
+    // Add stores as circle markers
+    stores.forEach(store => {
+      var circle = L.circleMarker(store.coords, {
+        radius: getRadius(store.sales),
+        fillColor: "#0046ad",
+        color: "#0046ad",
+        weight: 1,
+        opacity: 1,
+        fillOpacity: 0.7
+      }).addTo(map);
+
+      circle.bindPopup(
+        `<b>Walmart ${store.city}</b><br>
+         <b>Annual Sales:</b> $${store.sales.toLocaleString()}<br>
+         📍 ${store.coords[0]}, ${store.coords[1]}`
+      );
+    });
+
+    // Legend
+    var legend = L.control({position: 'bottomright'});
+    legend.onAdd = function (map) {
+      var div = L.DomUtil.create('div', 'legend');
+      div.innerHTML += "<b>Sales Volume</b><br>";
+      div.innerHTML += '<i style="background:#0046ad; border-radius:50%; width:10px; height:10px; display:inline-block;"></i> < $500K<br>';
+      div.innerHTML += '<i style="background:#0046ad; border-radius:50%; width:15px; height:15px; display:inline-block;"></i> $500K - $1M<br>';
+      div.innerHTML += '<i style="background:#0046ad; border-radius:50%; width:20px; height:20px; display:inline-block;"></i> > $1M<br>';
+      return div;
+    };
+    legend.addTo(map);
+  </script>
+
+</body>
+</html>

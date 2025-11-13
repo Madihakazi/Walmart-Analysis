@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Walmart Sales Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    .btn {
+      display: inline-block;
+      background: #007bff;
+      color: white;
+      padding: 10px 20px;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 16px;
+      margin: 10px 0; /* spacing between buttons */
+    }
+
+    .report-btn {
+      background: #28a745; /* green button */
+    }
+
+    .map-button {
+      text-align: center;
+      margin-top: 25px;
+    }
+
+    .map-button a {
+      text-decoration: none;
+      background: #007BFF;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 18px;
+      transition: 0.3s;
+      display: inline-block;
+      margin: 5px;
+    }
+
+    .map-button a i {
+      margin-right: 8px;
+    }
+
+    .map-button a:hover {
+      background: #FF9900;
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+  <div class="upload-container">
+    <img src="{{ url_for('static', filename='walmart-logo.png') }}" alt="Walmart Logo" class="logo">
+    <h1>Walmart Sales Upload</h1>
+    <p>Upload your Walmart sales CSV to get an insightful report</p>
+
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+      <input type="file" name="file" accept=".csv" required />
+      <button type="submit">Generate Report</button>
+    </form>
+
+    <div class="map-button">
+      <a href="{{ url_for('map_page') }}" class="btn">
+        <i class="fas fa-map-marked-alt"></i> View Sales Map
+      </a>
+
+      <a href="{{ url_for('analysis_page') }}" class="btn report-btn" target="_blank">
+        View Full Analysis Report
+      </a>
+    </div>
+  </div>
+</body>
+</html>
